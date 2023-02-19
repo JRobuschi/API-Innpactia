@@ -1,4 +1,4 @@
-// const DBMysql = require("./mysql.config");
+const DBMysql = require("./mysql.config");
 const { Customer } = require("../models/customer.model");
 const { User } = require("../models/user.model");
 const { Phone } = require("../models/phone.model");
@@ -29,11 +29,11 @@ Customer.sync();
 Phone.sync();
 Fix.sync();
 
-//Drop DB
+// //Drop DB
 // sequelize.drop().then(() => {
 //   console.log("All Delete");
 // });
 
-// DBMysql.sync()
-//   .then(() => console.log("DB Successfully Connected"))
-//   .catch((err) => console.log(err));
+DBMysql.sync()
+  .then(() => console.log("DB Successfully Connected"))
+  .catch((err) => console.log(err));

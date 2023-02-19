@@ -75,7 +75,7 @@ const findCustomerId = async (req, res) => {
   }
 
   const customer = await Customer.findOne({
-    where: { id_customer: req.body.customerIdCustomer },
+    where: { id_customer: id_customer },
   });
 
   if (!customer) {
