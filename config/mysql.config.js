@@ -11,10 +11,3 @@ const sequelize = new Sequelize(
 );
 
 module.exports = sequelize;
-
-// sequelize.sync();
-
-// var db = {};
-// db.sequelize = sequelize;
-// db.Sequelize = Sequelize;
-// module.exports = db;
