@@ -1,4 +1,4 @@
-# Innpactia API 🏛️💰💱
+# Innpactia API
 
 This is an API created with Javascript
 
