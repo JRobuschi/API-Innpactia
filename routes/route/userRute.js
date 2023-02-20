@@ -13,6 +13,6 @@ const ValidateToken = require("../../middlewares/validateToken");
 /**Get all users */
 users.get("/", ValidateToken, getUsers);
 users.post("/", ValidateUser, createUser);
-users.delete("/:id", deleteByUser);
+users.delete("/:id", ValidateToken, deleteByUser);
 users.post("/login", loginUser);
 module.exports = users;

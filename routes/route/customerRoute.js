@@ -6,9 +6,10 @@ const {
   createCustomer,
 } = require("../../controllers/customerController");
 const { ValidateCustomer } = require("../../models/customer.model");
+const ValidateToken = require("../../middlewares/validateToken");
 
 /**Get all customers */
-customer.get("/", getCustomers);
-customer.post("/", ValidateCustomer, createCustomer);
+customer.get("/", ValidateToken, getCustomers);
+customer.post("/", ValidateToken, ValidateCustomer, createCustomer);
 
 module.exports = customer;
