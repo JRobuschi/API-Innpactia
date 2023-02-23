@@ -20,12 +20,15 @@ const Phone = sequelize.define("phones", {
 const ValidatePhone = (req, res, next) => {
   const schema = Joi.object({
     phone_number: Joi.number().required().messages({
-      "any.required": "Ingresa un monto valido",
+      "any.required": "Insert the number",
     }),
     model: Joi.string().min(2).max(100).required().messages({
       "string.empty": "Insert the model",
       "string.min": "Model must have more than 2 characters",
       "any.required": "Insert the model",
+    }),
+    customerDni: Joi.string().required().messages({
+      "any.required": "Insert the number dni",
     }),
   });
   validateRequest(req, res, next, schema);

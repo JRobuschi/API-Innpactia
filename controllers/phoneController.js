@@ -2,23 +2,14 @@ const { Phone } = require("../models/phone.model");
 const { Customer } = require("../models/customer.model");
 const { where } = require("sequelize");
 
-const findCustomerId = async (req, res) => {
-  console.log(req.body);
-  if (req.body.customerIdCustomer === undefined) {
-    throw new Error("customerIdCustomer is required");
-  }
-
-  const customer = await Customer.findOne({
-    where: { id_customer: id_customer },
+const findCustomerDni = async (req, res) => {
+  const customerDni = await Customer.findOne({
+    where: { dni: req.body.customerDni },
+  }).then((data) => {
+    return data.dataValues.dni;
   });
 
-  if (!customer) {
-    throw new Error(
-      `Customer with id ${req.body.customerIdCustomer} not found`
-    );
-  }
-
-  return customer.id_customer;
+  return customerDni;
 };
 
 const getPhones = async (req, res) => {
@@ -36,31 +27,35 @@ const getPhones = async (req, res) => {
 
 const createPhone = async (req, res) => {
   try {
-    const customerId = await findCustomerId(req, res);
+    console.log(req.body);
+    const customerDni = await findCustomerDni(req, res);
+    if (req.body.customerDni != null) {
+      const modelData = {
+        customerDni: customerDni,
+        model: req.body.model,
+        phone_number: req.body.phone_number,
+      };
 
-    const modelData = {
-      customerIdCustomer: customerId,
-      model: req.body.model,
-      phone_number: req.body.phone_number,
-    };
+      const response = await Phone.create(modelData)
+        .then((data) => {
+          const res = { error: false, data: data, message: "Phone Create" };
+          return res;
+        })
+        .catch((e) => {
+          if (
+            e.name == "SequelizeUniqueConstraintError" ||
+            e.name == "SequelizeValidationError"
+          ) {
+            return { error: true, message: e.errors.map((err) => err.message) };
+          } else {
+            return { error: true, message: e };
+          }
+        });
 
-    const response = await Phone.create(modelData)
-      .then((data) => {
-        const res = { error: false, data: data, message: "Phone Create" };
-        return res;
-      })
-      .catch((e) => {
-        if (
-          e.name == "SequelizeUniqueConstraintError" ||
-          e.name == "SequelizeValidationError"
-        ) {
-          return { error: true, message: e.errors.map((err) => err.message) };
-        } else {
-          return { error: true, message: e };
-        }
-      });
-
-    res.json(response);
+      res.json(response);
+    } else {
+      console.log("El dni no fue encontrado");
+    }
   } catch (e) {
     res.status(400).json({ error: true, message: e.message });
   }

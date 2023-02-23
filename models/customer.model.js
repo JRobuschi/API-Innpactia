@@ -14,10 +14,13 @@ const Customer = sequelize.define(
     },
     name: {
       type: Sequelize.DataTypes.STRING,
-      unique: true,
     },
     lastName: {
       type: Sequelize.DataTypes.STRING,
+    },
+    dni: {
+      type: Sequelize.DataTypes.INTEGER,
+      unique: true,
     },
     status: {
       type: Sequelize.DataTypes.BOOLEAN,
@@ -37,6 +40,10 @@ const ValidateCustomer = (req, res, next) => {
     lastName: Joi.string().min(3).max(100).required().messages({
       "string.empty": "Ingresa el Nombre",
       "string.min": "El nombre debe ser mayor a 5 caracteres",
+      "any.required": "Ingresa el Nombre",
+    }),
+    dni: Joi.number().required().messages({
+      "string.empty": "Ingresa el DNI",
       "any.required": "Ingresa el Nombre",
     }),
   });

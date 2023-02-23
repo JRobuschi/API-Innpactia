@@ -17,6 +17,7 @@ const createCustomer = async (req, res) => {
     const modelData = {
       name: req.body.name,
       lastName: req.body.lastName,
+      dni: req.body.dni,
     };
     const response = await Customer.create(modelData)
       .then((data) => {

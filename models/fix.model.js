@@ -28,6 +28,10 @@ const ValidateFix = (req, res, next) => {
       "string.min": "Description must have more than 2 characters",
       "any.required": "Insert the description",
     }),
+    phoneNumber: Joi.number().required().messages({
+      "string.empty": "Insert the Phone Number",
+      "any.required": "Insert the description",
+    }),
   });
   validateRequest(req, res, next, schema);
 };

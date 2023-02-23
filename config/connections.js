@@ -6,22 +6,22 @@ const { Fix } = require("../models/fix.model");
 const sequelize = require("./mysql.config");
 
 Customer.hasMany(Phone, {
-  foreingKey: "customerIdCustomer",
-  sourceKey: "id_customer",
+  foreignKey: "customerDni",
+  sourceKey: "dni",
 });
 
 Phone.belongsTo(Customer, {
-  foreingKey: "customerIdCustomer",
-  targetKey: "id_customer",
+  foreignKey: "customerDni",
+  targetKey: "dni",
 });
 
 Phone.hasMany(Fix, {
-  foreingKey: "IdPhone",
-  sourceKey: "phone_id",
+  foreignKey: "phoneNumber",
+  sourceKey: "phone_number",
 });
 Fix.belongsTo(Phone, {
-  foreingKey: "IdPhone",
-  targetKey: "phone_id",
+  foreignKey: "phoneNumber",
+  targetKey: "phone_number",
 });
 
 User.sync();

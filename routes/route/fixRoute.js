@@ -7,6 +7,6 @@ const ValidateToken = require("../../middlewares/validateToken");
 
 /**Get all customers */
 fix.get("/", ValidateToken, getFix);
-fix.post("/", ValidateToken, ValidateFix, createFix);
+fix.post("/", [ValidateToken, ValidateFix], createFix);
 
 module.exports = fix;
